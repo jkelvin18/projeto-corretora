@@ -5,58 +5,48 @@ class NegociacaoService {
         this._http = new HttpService();
     }
 
-    obterNegociacoesDaSemana() {
-
-        return new Promise(( resolve, reject) => {
+    obterNegociacoesDaSemana() {        
             
-            this._http
+           return this._http
                 .get('negociacoes/semana')
                 .then(negociacoes => {
-                        resolve(negociacoes.map(objeto=> new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor)));    
+                    console.log(negociacoes);
+                    return negociacoes.map(objeto=> new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor));    
                 })
                 .catch(erro => {
-                console.log(erro);
-                reject('Não foi possível obter as negociaçoes da semana');
-                })
-        });
-
+                    console.log(erro);
+                    throw new Error('Não foi possível obter as negociaçoes da semana');
+                });
     }
 
-    obterNegociacoesDaSemanaAnterior() {
+    obterNegociacoesDaSemanaAnterior() {        
 
-        return new Promise((resolve, reject) => {
-
-            this._http
+           return this._http
                 .get('negociacoes/anterior')
                 .then(negociacoes => {
                     console.log(negociacoes);
-                    resolve(negociacoes.map(objeto => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor)));
+                    return negociacoes.map(objeto => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor));
     
                 })
                 .catch(erro => {
                     console.log(erro);
-                    reject('Não foi possível obter as negociações da semana anterior');
-                })
-        });
+                    throw new Error('Não foi possível obter as negociações da semana anterior');
+                });
     }
  
     obterNegociacoesDaSemanaRetrasada() {
 
-        return new Promise((resolve, reject) => {
-
-            this._http
+            return this._http
                 .get('negociacoes/retrasada')
                 .then(negociacoes => {
                     console.log(negociacoes);
-                    resolve(negociacoes.map(objeto => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor)));
+                    return negociacoes.map(objeto => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor));
     
                 })
                 .catch(erro => {
                     console.log(erro);
-                    reject('Não foi possível obter as negociações da semana retrasada');
-                    })
-        });
-      
+                    throw new Error('Não foi possível obter as negociações da semana retrasada');
+                    });      
     }
 
 }
